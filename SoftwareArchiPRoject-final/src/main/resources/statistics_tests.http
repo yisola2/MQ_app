@@ -1,0 +1,91 @@
+### Statistics and Monitoring Test Suite ###
+@host=http://localhost
+###
+# Note: You may need to set monitoring.enabled=true in application.properties
+###
+GET {{host}}/statistics
+Accept: application/json
+
+HTTP/1.1 200  - OK
+server: nginx/1.27.4
+date: Sun, 30 Mar 2025 18:46:12 GMT
+content-type: application/json
+transfer-encoding: chunked
+connection: close
+###
+GET {{host}}/topics/worker-logs/messages
+Accept: application/json
+
+HTTP/1.1 200  - OK
+server: nginx/1.27.4
+date: Sun, 30 Mar 2025 18:46:12 GMT
+content-type: application/json
+transfer-encoding: chunked
+connection: close
+###
+# Search for monitoring cycles
+GET {{host}}/topics/worker-logs/messages/search?q=Monitoring cycle
+Accept: application/json
+
+# Search for container status changes
+
+HTTP/1.1 200  - OK
+server: nginx/1.27.4
+date: Sun, 30 Mar 2025 18:46:13 GMT
+content-type: application/json
+transfer-encoding: chunked
+connection: close
+###
+GET {{host}}/topics/worker-logs/messages/search?q=Container stopped
+Accept: application/json
+
+# Search for container health checks
+
+HTTP/1.1 200  - OK
+server: nginx/1.27.4
+date: Sun, 30 Mar 2025 18:46:13 GMT
+content-type: application/json
+transfer-encoding: chunked
+connection: close
+###
+GET {{host}}/topics/worker-logs/messages/search?q=Container unhealthy
+Accept: application/json
+
+HTTP/1.1 200  - OK
+server: nginx/1.27.4
+date: Sun, 30 Mar 2025 18:46:13 GMT
+content-type: application/json
+transfer-encoding: chunked
+connection: close
+###
+GET {{host}}/queues/restart-queue/messages
+Accept: application/json
+
+HTTP/1.1 200  - OK
+server: nginx/1.27.4
+date: Sun, 30 Mar 2025 18:46:13 GMT
+content-type: application/json
+transfer-encoding: chunked
+connection: close
+###
+POST {{host}}/queues/restart-queue/messages
+Content-Type: application/json
+
+"test-container-123"
+
+HTTP/1.1 201  - Created
+server: nginx/1.27.4
+date: Sun, 30 Mar 2025 18:46:13 GMT
+content-type: application/json
+transfer-encoding: chunked
+connection: close
+###
+GET {{host}}/statistics
+Accept: application/json 
+
+HTTP/1.1 200  - OK
+server: nginx/1.27.4
+date: Sun, 30 Mar 2025 18:46:13 GMT
+content-type: application/json
+transfer-encoding: chunked
+connection: close

@@ -1,0 +1,77 @@
+apiVersion: 1
+
+contactPoints:
+  - orgId: 1
+    name: discord
+    receivers:
+      - uid: discord-1
+        type: discord
+        settings:
+          url: ${DISCORD_WEBHOOK_URL}
+          message: "🚨 Container Alert: {{.CommonLabels.instance}} is {{.Status}}"
+
+notificationPolicies:
+  - orgId: 1
+    receiver: discord-1
+    group_by: ['alertname']
+    group_wait: 10s
+    group_interval: 1m
+    repeat_interval: 1m
+
+groups:
+  - orgId: 1
+    name: hh
+    folder: Container_Monitoring
+    interval: 1m
+    rules:
+      - uid: cehfnp96ucirka
+        title: Container_Down
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 600
+              to: 0
+            datasourceUid: PBFA97CFB590B2093
+            model:
+              editorMode: code
+              expr: up{job=~"app1|app2"} < 1
+              instant: true
+              intervalMs: 1000
+              legendFormat: __auto
+              maxDataPoints: 43200
+              range: false
+              refId: A
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 0
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - C
+                  reducer:
+                    params: []
+                    type: last
+                  type: query
+              datasource:
+                type: __expr__
+                uid: __expr__
+              expression: A
+              intervalMs: 1000
+              maxDataPoints: 43200
+              refId: C
+              type: threshold
+        noDataState: NoData
+        execErrState: Error
+        for: 1m
+        isPaused: false
+        labels:
+          severity: critical
+        annotations:
+          summary: Container {{$labels.instance}} is down 

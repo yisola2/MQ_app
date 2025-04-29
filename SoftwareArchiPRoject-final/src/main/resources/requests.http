@@ -1,0 +1,213 @@
+@host=http://localhost
+###
+GET {{host}}/queues/instance
+Accept: application/json
+
+HTTP/1.1 200  - OK
+server: nginx/1.27.4
+date: Sun, 30 Mar 2025 21:38:12 GMT
+content-type: application/json
+content-length: 25
+connection: close
+###
+GET {{host}}/queues
+Accept: application/json
+
+HTTP/1.1 200  - OK
+server: nginx/1.27.4
+date: Sun, 30 Mar 2025 21:38:12 GMT
+content-type: application/json
+transfer-encoding: chunked
+connection: close
+###
+POST {{host}}/queues/main/messages
+Content-Type: application/json
+
+"First test message"
+
+HTTP/1.1 201  - Created
+server: nginx/1.27.4
+date: Sun, 30 Mar 2025 21:38:12 GMT
+content-type: application/json
+transfer-encoding: chunked
+connection: close
+###
+POST {{host}}/queues/main/messages
+Content-Type: application/json
+
+"Second test message"
+
+HTTP/1.1 201  - Created
+server: nginx/1.27.4
+date: Sun, 30 Mar 2025 21:38:13 GMT
+content-type: application/json
+transfer-encoding: chunked
+connection: close
+###
+GET {{host}}/queues/main/messages
+Accept: application/json
+
+HTTP/1.1 200  - OK
+server: nginx/1.27.4
+date: Sun, 30 Mar 2025 21:38:13 GMT
+content-type: application/json
+transfer-encoding: chunked
+connection: close
+###
+GET {{host}}/queues/main/messages/next
+Accept: application/json
+
+HTTP/1.1 200  - OK
+server: nginx/1.27.4
+date: Sun, 30 Mar 2025 21:38:13 GMT
+content-type: application/json
+transfer-encoding: chunked
+connection: close
+###
+GET {{host}}/queues/main/messages
+Accept: application/json
+
+HTTP/1.1 200  - OK
+server: nginx/1.27.4
+date: Sun, 30 Mar 2025 21:38:13 GMT
+content-type: application/json
+transfer-encoding: chunked
+connection: close
+###
+GET {{host}}/queues/main/messages/consumed
+Accept: application/json
+
+HTTP/1.1 200  - OK
+server: nginx/1.27.4
+date: Sun, 30 Mar 2025 21:38:13 GMT
+content-type: application/json
+transfer-encoding: chunked
+connection: close
+###
+GET {{host}}/queues/main/messages/next
+Accept: application/json
+
+HTTP/1.1 200  - OK
+server: nginx/1.27.4
+date: Sun, 30 Mar 2025 21:38:14 GMT
+content-type: application/json
+transfer-encoding: chunked
+connection: close
+###
+GET {{host}}/queues/main/messages
+Accept: application/json
+
+HTTP/1.1 200  - OK
+server: nginx/1.27.4
+date: Sun, 30 Mar 2025 21:38:14 GMT
+content-type: application/json
+transfer-encoding: chunked
+connection: close
+###
+GET {{host}}/topics/system-events/messages
+Accept: application/json
+
+HTTP/1.1 200  - OK
+server: nginx/1.27.4
+date: Sun, 30 Mar 2025 21:38:14 GMT
+content-type: application/json
+transfer-encoding: chunked
+connection: close
+###
+GET {{host}}/topics/container-status/messages
+Accept: application/json
+
+HTTP/1.1 200  - OK
+server: nginx/1.27.4
+date: Sun, 30 Mar 2025 21:38:14 GMT
+content-type: application/json
+transfer-encoding: chunked
+connection: close
+###
+GET {{host}}/topics/worker-logs/messages
+Accept: application/json
+
+HTTP/1.1 200  - OK
+server: nginx/1.27.4
+date: Sun, 30 Mar 2025 21:38:14 GMT
+content-type: application/json
+transfer-encoding: chunked
+connection: close
+###
+GET {{host}}/topics/system-events/messages/search?q=system
+Accept: application/json
+
+HTTP/1.1 200  - OK
+server: nginx/1.27.4
+date: Sun, 30 Mar 2025 21:38:14 GMT
+content-type: application/json
+transfer-encoding: chunked
+connection: close
+###
+GET {{host}}/topics/system-events/messages?start=1
+Accept: application/json
+
+HTTP/1.1 200  - OK
+server: nginx/1.27.4
+date: Sun, 30 Mar 2025 21:38:15 GMT
+content-type: application/json
+transfer-encoding: chunked
+connection: close
+###
+DELETE {{host}}/queues/main/messages/2
+
+HTTP/1.1 404  - Not Found
+server: nginx/1.27.4
+date: Sun, 30 Mar 2025 21:38:15 GMT
+content-type: text/plain;charset=UTF-8
+content-length: 26
+connection: close
+###
+GET {{host}}/queues/main/messages/next
+Accept: application/json
+
+HTTP/1.1 200  - OK
+server: nginx/1.27.4
+date: Sun, 30 Mar 2025 21:38:15 GMT
+content-type: application/json
+transfer-encoding: chunked
+connection: close
+###
+DELETE {{host}}/queues/main/messages/2
+
+HTTP/1.1 404  - Not Found
+server: nginx/1.27.4
+date: Sun, 30 Mar 2025 21:38:15 GMT
+content-type: text/plain;charset=UTF-8
+content-length: 26
+connection: close
+###
+GET {{host}}/queues/main/messages/next
+Accept: application/json
+
+HTTP/1.1 200  - OK
+server: nginx/1.27.4
+date: Sun, 30 Mar 2025 21:38:15 GMT
+content-type: application/json
+transfer-encoding: chunked
+connection: close
+###
+GET {{host}}/queues/nonexistent/messages
+Accept: application/json
+
+HTTP/1.1 404  - Not Found
+server: nginx/1.27.4
+date: Sun, 30 Mar 2025 21:38:15 GMT
+content-length: 0
+connection: close
+###
+POST {{host}}/queues/nonexistent/messages
+Content-Type: application/json
+
+"This should fail"
+
+HTTP/1.1 404  - Not Found
+server: nginx/1.27.4
+date: Sun, 30 Mar 2025 21:38:15 GMT
+content-length: 0
+connection: close

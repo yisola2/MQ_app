@@ -1,0 +1,12 @@
+# Ignore IntelliJ IDEA config files
+.idea/
+*.iml
+
+# Ignore compiled Java classes
+target/
+*.class
+
+# Ignore logs, temporary, and OS files
+*.log
+*.tmp
+.DS_Store
